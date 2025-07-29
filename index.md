@@ -2,16 +2,12 @@
 title: Camunas Server Guide
 ---
 
-
-
-
 # Utilizing the Jcamunas Server
 
 ## Server Information
 
 * **IP**: `130.241.204.241`
-* **Default Admin User**: `Jcamunas`
-* **Default Password**: `Sequenceit!9`
+* **Note**: Each user has a **personal login**. Do **not** use the shared `Jcamunas` account for work or file transfer.
 
 ---
 
@@ -26,12 +22,12 @@ You must be connected to the **Cisco Secure VPN client** to access the server.
 
 ---
 
-## 1. Access Server via Web Interface
+## 1. Access Server via Web Interface (Recommended)
 
 You can access the server using your web browser:
 
 * URL: [http://130.241.204.241:5000/](http://130.241.204.241:5000/)
-* Username: `Jcamunas`
+* Username: `{your_name}`
 * Password: `Sequenceit!9`
 
 ---
@@ -63,7 +59,7 @@ Should output two files:
 If `ssh-copy-id` fails due to too many keys, use this instead:
 
 ```bash
-cat ~/.ssh/id_ed25519_camunas.pub | ssh -o IdentitiesOnly=yes -i ~/.ssh/id_ed25519_camunas Jcamunas@130.241.204.241 \
+cat ~/.ssh/id_ed25519_camunas.pub | ssh -o IdentitiesOnly=yes -i ~/.ssh/id_ed25519_camunas {your_name}@130.241.204.241 \
 'mkdir -p ~/.ssh && chmod 700 ~/.ssh && cat >> ~/.ssh/authorized_keys && chmod 600 ~/.ssh/authorized_keys'
 ```
 
@@ -74,7 +70,7 @@ Edit or create `~/.ssh/config`:
 ```bash
 Host camunas
     HostName 130.241.204.241
-    User mercedes
+    User {your_name}
     IdentityFile ~/.ssh/id_ed25519_camunas
     IdentitiesOnly yes
 ```
@@ -87,30 +83,7 @@ ssh camunas
 
 ---
 
-## 3. Setting Up Personal Logins (Admin Guide)
-
-Admins can create individual logins for each user:
-
-```bash
-sudo adduser username
-```
-
-Then place the user's public key in:
-
-```bash
-/home/username/.ssh/authorized_keys
-```
-
-Set correct permissions:
-
-```bash
-chmod 700 ~/.ssh
-chmod 600 ~/.ssh/authorized_keys
-```
-
----
-
-## 4. File Storage Policy
+## 3. File Storage Policy
 
 Upon login, the system warns:
 
@@ -132,7 +105,7 @@ Use only your folder for storing files to avoid loss.
 
 ---
 
-## 5. Transferring Files To the Server
+## 4. Transferring Files To the Server
 
 Because inbound `scp`/`rsync` is restricted, **you must pull data from the server side**.
 
@@ -161,36 +134,16 @@ tail -f rsync.log
 
 ---
 
-## 6. Hosting this Guide as a GitHub Page
+## 6. Admin Guide
 
-You can publish this guide using GitHub Pages:
+* **Default Admin User**: `Jcamunas`
+* **Default Password**: `Sequenceit!9`
 
-### a. Create a New GitHub Repository
 
-1. Go to [https://github.com](https://github.com)
-2. Create a new public repository, e.g. `camunas-server-guide`
-3. Name your main file `index.md` or `README.md`
 
-### b. Push Your Markdown File
+Admins can eg create individual logins for each user.
+See more info: [https://kb.synology.com/sv-se/DSM/help/DSM/AdminCenter/file_user_desc?version=7]
 
-```bash
-git clone https://github.com/yourusername/camunas-server-guide.git
-cd camunas-server-guide
-# Save this guide as index.md
-cp ~/Documents/camunas_guide.md index.md
-git add index.md
-git commit -m "Add server guide"
-git push
-```
-
-### c. Enable GitHub Pages
-
-1. Go to your repo settings → Pages
-2. Choose branch: `main`, folder: `/root`
-3. Save, and GitHub will give you a live URL like:
-   `https://yourusername.github.io/camunas-server-guide`
-
----
 
 ## Support
 
